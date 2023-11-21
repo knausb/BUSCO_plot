@@ -15,3 +15,8 @@ A data.frame.
 \description{
 Read in a BUSCO full_table.tsv
 }
+\examples{
+DM6file <- system.file("extdata", "DM6_full_table.tsv.gz", package = 'BUSCOplot')
+DM6 <- read_busco(DM6file)
+
+}
