@@ -1,6 +1,6 @@
 #' Create a gg style line map using BUSCO coordinates
 #' 
-#' @param busc A matrix of BUSCO coordinates for one chromosome/scaffold.
+#' @param busc A data.frame of BUSCO coordinates with Busco_ids as row.names.
 #' @param rect A number.
 #' @param palpha A number.
 #' @param size A number.
@@ -22,14 +22,7 @@
 #' chromL <- add_unknown(known_list = chromL, unknown_df = ATL, sample_name = "ATL:")
 #' #lapply(chromL[1:2], head, n=2)
 #' 
-#' tmp <- chromL[[1]]
-#' colnames(tmp)[ colnames(tmp) == "Gene_Start" ] <- unique(chromL[[1]]$Sequence)[1]
-#' #tmp[1:3, ]
-#' rownames(tmp) <- tmp$Busco_id
-#' tmp <- tmp[ , c(4, 9:ncol(tmp))]
-#' #tmp[1:3, ]
-#' 
-#' gg_line_map(tmp)
+#' gg_line_map(chromL[[1]])
 #' 
 #' 
 #' @export
@@ -42,6 +35,12 @@ gg_line_map <- function( busc,
 #  library(dplyr)
 #  library(ggplot2)
 #  library(viridisLite)
+  check_busco_table(busc)
+  if( length( unique( busc$Sequence ) ) != 1 ){
+    stop("Sequence column is expected to contain a single unique value.")
+  }
+  colnames(busc)[4] <- unique( busc$Sequence )
+  busc <- busc[ , c(4, 9:ncol(busc))]
   
   chr_width <- 0.2
   rect_df <- data.frame(xmin = 1:ncol(busc) - chr_width, 

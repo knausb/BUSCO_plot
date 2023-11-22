@@ -15,6 +15,8 @@
 #' 
 #' @export
 make_known <- function(x, sample_name = ""){
+  check_busco_table(x)
+  
   x <- x[ x$Status == "Complete", , drop = FALSE]
   x$Sequence <- paste(sample_name, x$Sequence, sep = "")
   busco_l <- vector( mode = "list", length = length( unique(x$Sequence) ) )

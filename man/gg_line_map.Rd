@@ -15,7 +15,7 @@ gg_line_map(
 )
 }
 \arguments{
-\item{busc}{A matrix of BUSCO coordinates for one chromosome/scaffold.}
+\item{busc}{A data.frame of BUSCO coordinates with Busco_ids as row.names.}
 
 \item{rect}{A number.}
 
@@ -45,14 +45,7 @@ ATL <- read_busco(ATLfile)
 chromL <- add_unknown(known_list = chromL, unknown_df = ATL, sample_name = "ATL:")
 #lapply(chromL[1:2], head, n=2)
 
-tmp <- chromL[[1]]
-colnames(tmp)[ colnames(tmp) == "Gene_Start" ] <- unique(chromL[[1]]$Sequence)[1]
-#tmp[1:3, ]
-rownames(tmp) <- tmp$Busco_id
-tmp <- tmp[ , c(4, 9:ncol(tmp))]
-#tmp[1:3, ]
-
-gg_line_map(tmp)
+gg_line_map(chromL[[1]])
 
 
 }

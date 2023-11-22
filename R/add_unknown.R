@@ -21,6 +21,9 @@
 #' 
 #' @export
 add_unknown <- function(known_list, unknown_df, sample_name = ""){
+  check_busco_table(known_list[[1]])
+  check_busco_table(unknown_df)
+  
   unknown_df <- unknown_df[ unknown_df$Sequence != "Unplaced", ]
   unknown_df <- unknown_df[ unknown_df$Sequence != "", ]
   unknown_df$Sequence <- paste(sample_name, unknown_df$Sequence, sep = "")

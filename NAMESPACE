@@ -2,7 +2,10 @@
 
 export(add_unknown)
 export(busco_bar)
+export(check_busco_table)
 export(gg_line_map)
+export(line_map)
 export(make_known)
+export(position_BUSCOS)
 export(read_busco)
 importFrom(magrittr,"%>%")
