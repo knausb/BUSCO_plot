@@ -20,6 +20,7 @@
 #' gg_line_map(chromL[[1]])
 #' tmp <- position_BUSCOS(chromL[[1]])
 #' gg_line_map(tmp)
+#' #ggplot2::ggsave(filename = "potato_seqs.png", device = 'png', width = 4, height = 4, units = 'in', dpi = 300)
 #' 
 #' @export
 position_BUSCOS <- function(x, min_BUSCO = 0, sort_by = c("max_pos", "max_busco")){
