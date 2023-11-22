@@ -2,16 +2,26 @@
 % Please edit documentation in R/make_known.R
 \name{make_known}
 \alias{make_known}
-\title{Create list for BUSCO genes}
+\title{Create list for BUSCO Sequences}
 \usage{
-make_known(x)
+make_known(x, sample_name = "")
 }
 \arguments{
-\item{x}{A matrix of BUSCO coordinates for one chromosome/scaffold.}
+\item{x}{A data.frame of BUSCO coordinates from a full_table.tsv}
+
+\item{sample_name}{Name of the sample to add to Sequence names.}
 }
 \value{
 A list.
 }
 \description{
-Create list for BUSCO genes
+Create list for BUSCO Sequences
+}
+\examples{
+DM6file <- system.file("extdata", "DM6_full_table.tsv.gz", package = 'BUSCOplot')
+DM6 <- read_busco(DM6file)
+chromL <- make_known(DM6, sample_name = "DM6:")
+lapply(chromL[1:2], head, n=2)
+
+
 }

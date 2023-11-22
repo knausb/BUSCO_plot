@@ -12,6 +12,27 @@
 #' 
 #' @importFrom magrittr "%>%"
 #' 
+#' @examples
+#' DM6file <- system.file("extdata", "DM6_full_table.tsv.gz", package = 'BUSCOplot')
+#' DM6 <- read_busco(DM6file)
+#' chromL <- make_known(DM6, sample_name = "DM6:")
+#' #lapply(chromL[1:2], head, n=2)
+#' ATLfile <- system.file("extdata", "atlantic_full_table.tsv.gz", package = 'BUSCOplot')
+#' ATL <- read_busco(ATLfile)
+#' chromL <- add_unknown(known_list = chromL, unknown_df = ATL, sample_name = "ATL:")
+#' #lapply(chromL[1:2], head, n=2)
+#' 
+#' tmp <- chromL[[1]]
+#' colnames(tmp)[ colnames(tmp) == "Gene_Start" ] <- unique(chromL[[1]]$Sequence)[1]
+#' #tmp[1:3, ]
+#' rownames(tmp) <- tmp$Busco_id
+#' tmp <- tmp[ , c(4, 9:ncol(tmp))]
+#' #tmp[1:3, ]
+#' 
+#' gg_line_map(tmp)
+#' 
+#' 
+#' @export
 gg_line_map <- function( busc, 
                          rect = FALSE, 
                          palpha = 1.0, size = 1.0,
@@ -47,7 +68,9 @@ gg_line_map <- function( busc,
     data_long <- data_long[ !is.na(data_long$POS), ]
   }
   
-  p <- ggplot2::ggplot(data_long, ggplot2::aes(x = data_long$Sample, y = data_long$POS, color = data_long$Busco_id, group = data_long$Busco_id)) + 
+  Sample <- POS <- Busco_id <- NULL
+  #p <- ggplot2::ggplot(data_long, ggplot2::aes(x = data_long$Sample, y = data_long$POS, color = data_long$Busco_id, group = data_long$Busco_id)) + 
+  p <- ggplot2::ggplot(data_long, ggplot2::aes(x = Sample, y = POS, color = Busco_id, group = Busco_id)) + 
     ggplot2::geom_point( size = size, alpha = palpha ) +
     ggplot2::geom_line( linewidth = linewidth,
                #alpha = 0.1,

@@ -4,16 +4,32 @@
 \alias{add_unknown}
 \title{Add unknowns to list of BUSCO genes}
 \usage{
-add_unknown(known_list, unknown_df)
+add_unknown(known_list, unknown_df, sample_name = "")
 }
 \arguments{
-\item{known_list}{A list of known BUSCOs.}
+\item{known_list}{A list of known BUSCO Sequences.}
 
-\item{unknown_df}{A data.frame of BUSCOs}
+\item{unknown_df}{A data.frame of BUSCO coordinates from a full_table.tsv}
+
+\item{sample_name}{Name of the sample to add to Sequence names.}
 }
 \value{
 A list.
 }
 \description{
 Add unknowns to list of BUSCO genes
+}
+\examples{
+DM6file <- system.file("extdata", "DM6_full_table.tsv.gz", package = 'BUSCOplot')
+DM6 <- read_busco(DM6file)
+chromL <- make_known(DM6, sample_name = "DM6:")
+#lapply(chromL[1:2], head, n=2)
+
+ATLfile <- system.file("extdata", "atlantic_full_table.tsv.gz", package = 'BUSCOplot')
+ATL <- read_busco(ATLfile)
+chromL <- add_unknown(known_list = chromL, unknown_df = ATL, sample_name = "ATL:")
+#lapply(chromL[1:2], head, n=2)
+
+
+
 }

@@ -17,3 +17,11 @@ A ggplot object.
 \description{
 Create a gg style barplot for BUSCO genes
 }
+\examples{
+
+DM6file <- system.file("extdata", "DM6_full_table.tsv.gz", package = 'BUSCOplot')
+DM6 <- read_busco(DM6file)
+busco_bar(DM6)
+
+
+}

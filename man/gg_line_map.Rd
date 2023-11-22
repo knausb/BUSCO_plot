@@ -35,3 +35,24 @@ A ggplot object.
 \description{
 Create a gg style line map using BUSCO coordinates
 }
+\examples{
+DM6file <- system.file("extdata", "DM6_full_table.tsv.gz", package = 'BUSCOplot')
+DM6 <- read_busco(DM6file)
+chromL <- make_known(DM6, sample_name = "DM6:")
+#lapply(chromL[1:2], head, n=2)
+ATLfile <- system.file("extdata", "atlantic_full_table.tsv.gz", package = 'BUSCOplot')
+ATL <- read_busco(ATLfile)
+chromL <- add_unknown(known_list = chromL, unknown_df = ATL, sample_name = "ATL:")
+#lapply(chromL[1:2], head, n=2)
+
+tmp <- chromL[[1]]
+colnames(tmp)[ colnames(tmp) == "Gene_Start" ] <- unique(chromL[[1]]$Sequence)[1]
+#tmp[1:3, ]
+rownames(tmp) <- tmp$Busco_id
+tmp <- tmp[ , c(4, 9:ncol(tmp))]
+#tmp[1:3, ]
+
+gg_line_map(tmp)
+
+
+}

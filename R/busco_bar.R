@@ -5,6 +5,15 @@
 #' 
 #' @returns A ggplot object.
 #' 
+#' 
+#' @examples
+#' 
+#' DM6file <- system.file("extdata", "DM6_full_table.tsv.gz", package = 'BUSCOplot')
+#' DM6 <- read_busco(DM6file)
+#' busco_bar(DM6)
+#' 
+#' 
+#' @export
 busco_bar <- function(x, max_copy = NULL){
   my_df <- as.data.frame( table( table( x$Busco_id[ x$Status %in% c("Complete", "Duplicated") ] ) ) )
   names(my_df) <- c("Copies", "Count")
@@ -28,7 +37,9 @@ busco_bar <- function(x, max_copy = NULL){
   my_df$Copies <- factor(my_df$Copies, levels = my_df$Copies)
   
   #library(ggplot2)
-  p <- ggplot2::ggplot(data = my_df, mapping = ggplot2::aes( x = my_df$Copies, y = my_df$Percent ) )
+  Copies <- Percent <- NULL
+  p <- ggplot2::ggplot(data = my_df, mapping = ggplot2::aes( x = Copies, y = Percent ) )
+  #p <- ggplot2::ggplot(data = my_df, mapping = ggplot2::aes( x = my_df$Copies, y = my_df$Percent ) )
   #p <- ggplot(data = my_df, mapping = aes( x = Copies, y = Count ) )
   p <- p + ggplot2::geom_bar(stat="identity", color="#000000", fill="#1E90FF")
   p <- p + ggplot2::theme_bw()
