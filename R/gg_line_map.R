@@ -1,12 +1,13 @@
 #' Create a gg style line map using BUSCO coordinates
 #' 
 #' @param busc A data.frame of BUSCO coordinates with Busco_ids as row.names.
-#' @param rect A number.
-#' @param palpha A number.
-#' @param size A number.
-#' @param lalpha A number.
-#' @param linewidth A number.
-#' @param line_na_rm A number.
+#' @param rect A logical indicating if a rectangle should be drawn from the lowest to highest BUSCO.
+#' @param palpha A number [0-1] for point alpha channel (transparency).
+#' @param size A number to adjust point size.
+#' @param lalpha A number [0-1] for line alpha channel (transparency).
+#' @param linewidth A number to adjust line width.
+#' @param line_na_rm A logical indicating if lines should end at missing points.
+#' @param check_table Logical to perform check for a properly formatted BUSCO table.
 #' 
 #' @returns A ggplot object.
 #' 
@@ -30,17 +31,23 @@ gg_line_map <- function( busc,
                          rect = FALSE, 
                          palpha = 1.0, size = 1.0,
                          lalpha = 1.0, linewidth = 1.0,
-                         line_na_rm = TRUE ){
+                         line_na_rm = TRUE,
+                         check_table = TRUE){
 #  library(tidyr)
 #  library(dplyr)
 #  library(ggplot2)
 #  library(viridisLite)
-  check_busco_table(busc)
-  if( length( unique( busc$Sequence ) ) != 1 ){
-    stop("Sequence column is expected to contain a single unique value.")
+  
+  if( check_table == TRUE ){
+    check_busco_table(busc)
+    if( length( unique( busc$Sequence ) ) != 1 ){
+      stop("Sequence column is expected to contain a single unique value.")
+    }
+    colnames(busc)[4] <- unique( busc$Sequence )
+    busc <- busc[ , c(4, 9:ncol(busc))]
+  } else {
+    warning( "Check for BUSCO table disabled, the user is responsible for results!" )
   }
-  colnames(busc)[4] <- unique( busc$Sequence )
-  busc <- busc[ , c(4, 9:ncol(busc))]
   
   chr_width <- 0.2
   rect_df <- data.frame(xmin = 1:ncol(busc) - chr_width, 

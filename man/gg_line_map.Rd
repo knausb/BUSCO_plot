@@ -11,23 +11,26 @@ gg_line_map(
   size = 1,
   lalpha = 1,
   linewidth = 1,
-  line_na_rm = TRUE
+  line_na_rm = TRUE,
+  check_table = TRUE
 )
 }
 \arguments{
 \item{busc}{A data.frame of BUSCO coordinates with Busco_ids as row.names.}
 
-\item{rect}{A number.}
+\item{rect}{A logical indicating if a rectangle should be drawn from the lowest to highest BUSCO.}
 
-\item{palpha}{A number.}
+\item{palpha}{A number \link{0-1} for point alpha channel (transparency).}
 
-\item{size}{A number.}
+\item{size}{A number to adjust point size.}
 
-\item{lalpha}{A number.}
+\item{lalpha}{A number \link{0-1} for line alpha channel (transparency).}
 
-\item{linewidth}{A number.}
+\item{linewidth}{A number to adjust line width.}
 
-\item{line_na_rm}{A number.}
+\item{line_na_rm}{A logical indicating if lines should end at missing points.}
+
+\item{check_table}{Logical to perform check for a properly formatted BUSCO table.}
 }
 \value{
 A ggplot object.

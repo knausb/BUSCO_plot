@@ -7,13 +7,33 @@
 dist_fingerprint(x, perc_comp = 0.2)
 }
 \arguments{
-\item{x}{A table of BUSCO coordinates.}
+\item{x}{A data.frame of BUSCO coordinates with Busco_ids as row.names.}
 
-\item{perc_comp}{percent composition}
+\item{perc_comp}{percent of top comparisons to include [0-1].}
 }
 \value{
 A matrix.
 }
 \description{
 Distance based on difference in BUSCO coordinates
+}
+\details{
+The input is reduced to a data.frame where each column is a sample and each row is the position for a BUSCO gene.
+A matrix of distances between samples is created by subtracting pairs of among BUSCO matrices.
+These differences are sorted and the first \code{perc_comp} percent of these comparisons are summed.
+This sum is used as the distance among pairs of samples and is reported in the upper and lower triangles of a matrix.
+This distance can be interpreted as the sum of the difference in lengths among pairs BUSCO genes.
+}
+\examples{
+DM6file <- system.file("extdata", "DM6_full_table.tsv.gz", package = 'BUSCOplot')
+DM6 <- read_busco(DM6file)
+chromL <- make_known(DM6, sample_name = "DM6:")
+#lapply(chromL[1:2], head, n=2)
+ATLfile <- system.file("extdata", "atlantic_full_table.tsv.gz", package = 'BUSCOplot')
+ATL <- read_busco(ATLfile)
+chromL <- add_unknown(known_list = chromL, unknown_df = ATL, sample_name = "ATL:")
+#lapply(chromL[1:2], head, n=2)
+dist_fingerprint(chromL[[1]])
+
+
 }

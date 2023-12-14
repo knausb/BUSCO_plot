@@ -3,6 +3,7 @@
 export(add_unknown)
 export(busco_bar)
 export(check_busco_table)
+export(dist_fingerprint)
 export(gg_line_map)
 export(line_map)
 export(make_known)

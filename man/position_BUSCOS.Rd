@@ -32,6 +32,6 @@ chromL <- add_unknown(known_list = chromL, unknown_df = ATL, sample_name = "ATL:
 gg_line_map(chromL[[1]])
 tmp <- position_BUSCOS(chromL[[1]])
 gg_line_map(tmp)
-#ggplot2::ggsave(filename = "potato_seqs.png", device = 'png', width = 3, height = 3, units = 'in', dpi = 300)
+#ggplot2::ggsave(filename = "potato_seqs.png", device = 'png', width = 3, height = 3, units = 'in', dpi = 200)
 
 }
