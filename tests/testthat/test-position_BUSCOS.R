@@ -20,6 +20,21 @@ test_that("position_buscos works", {
   
   expect_equal(ncol(tmp), 14)
   expect_equal(nrow(tmp), 329)
+  
+  testthat::expect_identical(
+    c("ATL:chr01_3", "ATL:chr01_4", "ATL:chr01_0", "ATL:chr01_1", 
+    "ATL:chr01_2", "ATL:chr03_1"),
+    colnames(tmp)[-c(1:8)])
+  
+  
+  #colnames(chromL[[1]])
+  # test_order <- c(`ATL:chr01_3` = 314L, `ATL:chr01_4` = 326L, `ATL:chr01_0` = 231L, 
+  #   `ATL:chr01_1` = 145L, `ATL:chr01_2` = 303L, `ATL:chr03_1` = 328L
+  # )
+  # check_order <- apply(tmp[ , 9:ncol(tmp)], MARGIN = 2, function(x){ max(x, na.rm = TRUE) })
+  #check_order <- apply(tmp[ , 9:ncol(tmp)], MARGIN = 2, function(x){ sum(!is.na(x)) })
+  
+  #test_order == check_order  
 })
  
 

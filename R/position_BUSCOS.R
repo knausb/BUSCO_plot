@@ -36,31 +36,45 @@ position_BUSCOS <- function(x, min_BUSCO = 0, sort_by = c("max_pos", "max_busco"
   }
 #  for(i in 1:length(x)){
 #    tmp <- x[[i]]
-    tmp <- x
-    #tmp <- x[ , c(4, 9:ncol(x))]
+  # tmp <- x[ , c(4, 9:ncol(x)), drop = FALSE ]
+  #tmp <- x
+  tmp <- x[ , c(4, 9:ncol(x))]
     #tmp <- x[ , 9:ncol(x), drop = FALSE ]
     #tmp <- tmp[, apply(tmp, MARGIN = 2, function(x){ sum(!is.na(x)) }) > min_BUSCO]
-    my_na <- apply(tmp[ , 9:ncol(tmp), drop = FALSE ], MARGIN = 2, function(x){ sum(!is.na(x)) })
+  my_na <- apply(tmp, MARGIN = 2, function(x){ sum(!is.na(x)) })
     #tmp[ , 9:ncol(tmp), drop = FALSE ]
-    tmp <- tmp[, c(rep(TRUE, times = 8), my_na >= min_BUSCO), drop = FALSE]
-    
-    tmp <- nudge_seqs(tmp, seed_col = 4, test_col = 9:ncol(tmp))
-    tmp <- flip_seqs(tmp, seed_col = 4, test_col = 9:ncol(tmp))
-    if( sort_by == "max_pos" ){
-      tmp[ , 9:ncol(tmp)] <- 
-        tmp[ , sort.int( 
-          apply(tmp[ , 9:ncol(tmp), drop = FALSE], MARGIN = 2, max, na.rm = TRUE),
-          decreasing = TRUE, index.return = TRUE)$ix + 8, drop = FALSE]
-    }
-    if( sort_by == "max_busco" ){
-      tmp[ , 9:ncol(tmp)] <- 
-        tmp[ , sort.int( 
-          apply(tmp[ , 9:ncol(tmp), drop = FALSE], MARGIN = 2, function(x){ sum(!is.na(x)) }),
-          decreasing = TRUE, index.return = TRUE)$ix + 8, drop = FALSE]
-    }
+  tmp <- tmp[ , my_na >= min_BUSCO, drop = FALSE ]
+  #apply(tmp, MARGIN = 2, function(x){ sum(is.na(x)) })
+  
+  #tmp <- nudge_seqs(tmp, seed_col = 4, test_col = 9:ncol(tmp))
+  #tmp <- flip_seqs(tmp, seed_col = 4, test_col = 9:ncol(tmp))
+  tmp <- nudge_seqs(tmp, seed_col = 1, test_col = 2:ncol(tmp))
+  tmp <- flip_seqs (tmp, seed_col = 1, test_col = 2:ncol(tmp))
+  
+  if( sort_by == "max_pos" ){
+      # tmp[ , 9:ncol(tmp)] <- 
+      #   tmp[ , sort.int( 
+      #     apply(tmp[ , 9:ncol(tmp), drop = FALSE], MARGIN = 2, max, na.rm = TRUE),
+      #     decreasing = TRUE, index.return = TRUE)$ix + 8, drop = FALSE]
+    max_pos <- apply(tmp[ , 2:ncol(tmp), drop = FALSE], MARGIN = 2, max, na.rm = TRUE)
+    sort_order <- sort.int(max_pos, decreasing = TRUE, index.return = TRUE)$ix
+    sort_order <- c(0, sort_order) + 1
+    tmp <- tmp[ , sort_order, drop = FALSE]
+  }
+  if( sort_by == "max_busco" ){
+      # tmp[ , 9:ncol(tmp)] <- 
+      #   tmp[ , sort.int( 
+      #     apply(tmp[ , 9:ncol(tmp), drop = FALSE], MARGIN = 2, function(x){ sum(!is.na(x)) }),
+      #     decreasing = TRUE, index.return = TRUE)$ix + 8, drop = FALSE]
+    max_count <- apply(tmp[ , 2:ncol(tmp), drop = FALSE], MARGIN = 2, function(x){ sum(!is.na(x)) })
+    sort_order <- sort.int(max_pos, decreasing = TRUE, index.return = TRUE)$ix
+    sort_order <- c(0, sort_order) + 1
+    tmp <- tmp[ , sort_order, drop = FALSE]
+  }
     #tmp[1:3, ]
     #x[[i]] <- tmp
-    x <- tmp
+    #x <- tmp
+  x <- cbind( x[, 1:8], tmp[ , -1] )
     #x <- cbind(x[, 1:8], tmp[, -1])
 #  }
   return(x)
