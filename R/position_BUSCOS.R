@@ -47,10 +47,16 @@ position_BUSCOS <- function(x, min_BUSCO = 0, sort_by = c("max_pos", "max_busco"
     tmp <- nudge_seqs(tmp, seed_col = 4, test_col = 9:ncol(tmp))
     tmp <- flip_seqs(tmp, seed_col = 4, test_col = 9:ncol(tmp))
     if( sort_by == "max_pos" ){
-      tmp[ , 9:ncol(tmp)] <- tmp[ , sort.int( apply(tmp[ , 9:ncol(tmp)], MARGIN = 2, max, na.rm = TRUE), decreasing = TRUE, index.return = TRUE)$ix + 8]
+      tmp[ , 9:ncol(tmp)] <- 
+        tmp[ , sort.int( 
+          apply(tmp[ , 9:ncol(tmp), drop = FALSE], MARGIN = 2, max, na.rm = TRUE),
+          decreasing = TRUE, index.return = TRUE)$ix + 8, drop = FALSE]
     }
     if( sort_by == "max_busco" ){
-      tmp[ , 9:ncol(tmp)] <- tmp[ , sort.int( apply(tmp[ , 9:ncol(tmp)], MARGIN = 2, function(x){ sum(!is.na(x)) }), decreasing = TRUE, index.return = TRUE)$ix + 8]
+      tmp[ , 9:ncol(tmp)] <- 
+        tmp[ , sort.int( 
+          apply(tmp[ , 9:ncol(tmp), drop = FALSE], MARGIN = 2, function(x){ sum(!is.na(x)) }),
+          decreasing = TRUE, index.return = TRUE)$ix + 8, drop = FALSE]
     }
     #tmp[1:3, ]
     #x[[i]] <- tmp
