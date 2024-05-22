@@ -14,15 +14,28 @@
 #' 
 #' @export
 check_busco_table <- function(x){
-  busco_names <- c("Busco_id", "Status", "Sequence", "Gene_Start",
-                  "Gene_End", "Strand", "Score", "Length")
-  if( !all(colnames(x)[1:8] == busco_names) ){
-    my_msg <- paste("First 8 column names expected to be: ", 
+  # busco_names <- c("Busco_id", "Status", "Sequence", "Gene_Start",
+  #                 "Gene_End", "Strand", "Score", "Length")
+  # busco_names <- c("Busco id", "Status", "Sequence", "Gene Start",
+  #                  "Gene End", "Strand", "Score", "Length")
+  busco_names <- c("Busco id", "Status", "Sequence", "Score", "Length")
+  
+  if( !all( busco_names %in% colnames(x) ) ){
+    my_msg <- paste("Column names expected to include: ", 
                     paste(busco_names, collapse = ", "),
                     ".",
                     sep = "")
-    stop( my_msg )
+    stop( my_msg )    
   }
+  
+  # if( !all(colnames(x)[1:8] == busco_names) ){
+  #   my_msg <- paste("First 8 column names expected to be: ", 
+  #                   paste(busco_names, collapse = ", "),
+  #                   ".",
+  #                   sep = "")
+  #   stop( my_msg )
+  # }
+  
   return(TRUE)
 }
 
