@@ -17,8 +17,9 @@
 busco_bar <- function(x, max_copy = NULL){
   check_busco_table(x)
   
-  #my_df <- as.data.frame( table( table( x$Busco_id[ x$Status %in% c("Complete", "Duplicated") ] ) ) )
-  my_df <- as.data.frame( table( table( x$`Busco id`[ x$Status %in% c("Complete", "Duplicated") ] ) ) )
+  #
+  my_df <- as.data.frame( table( table( x$Busco_id[ x$Status %in% c("Complete", "Duplicated") ] ) ) )
+  #my_df <- as.data.frame( table( table( x$`Busco id`[ x$Status %in% c("Complete", "Duplicated") ] ) ) )
   names(my_df) <- c("Copies", "Count")
   
   if( !is.null(max_copy) ){
@@ -49,3 +50,4 @@ busco_bar <- function(x, max_copy = NULL){
   #p <- p + ggtitle("BUSCO: DM6")
   return(p)
 }
+

@@ -16,6 +16,7 @@ read_busco <- function(file){
   my_header <- strsplit(my_header, split = "\t")
   my_header <- unlist(my_header)
   my_header <- sub("^# ", "", my_header)
+  my_header <- sub("[[:blank:]]", "_", my_header)
 
   busc <- utils::read.table(file, header = FALSE, sep = "\t", fill = TRUE)
   # names(busc) <- c("Busco_id", "Status", "Sequence", "Gene_Start",

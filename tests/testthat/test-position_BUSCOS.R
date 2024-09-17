@@ -7,10 +7,12 @@
 test_that("position_buscos works", {
   DM6file <- system.file("extdata", "DM6_full_table.tsv.gz", package = 'BUSCOplot')
   DM6 <- read_busco(DM6file)
+  # DM6[1:3, ]
   chromL <- make_known(DM6, sample_name = "DM6:")
   #lapply(chromL[1:2], head, n=2)
   ATLfile <- system.file("extdata", "atlantic_full_table.tsv.gz", package = 'BUSCOplot')
   ATL <- read_busco(ATLfile)
+  #ATL[1:3, ]
   chromL <- add_unknown(known_list = chromL, unknown_df = ATL, sample_name = "ATL:")
   #lapply(chromL[1:2], head, n=2)
  

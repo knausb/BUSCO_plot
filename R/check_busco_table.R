@@ -14,11 +14,12 @@
 #' 
 #' @export
 check_busco_table <- function(x){
-  # busco_names <- c("Busco_id", "Status", "Sequence", "Gene_Start",
-  #                 "Gene_End", "Strand", "Score", "Length")
+  busco_names <- c("Busco_id", "Status", "Sequence", "Gene_Start",
+                  "Gene_End", "Strand", "Score", "Length")
   # busco_names <- c("Busco id", "Status", "Sequence", "Gene Start",
   #                  "Gene End", "Strand", "Score", "Length")
-  busco_names <- c("Busco id", "Status", "Sequence", "Score", "Length")
+  # busco_names <- c("Busco id", "Status", "Sequence", "Score", "Length")
+  # colnames(x) <- sub("[[:blank:]]", "_", colnames(x))
   
   if( !all( busco_names %in% colnames(x) ) ){
     my_msg <- paste("Column names expected to include: ", 
@@ -36,6 +37,7 @@ check_busco_table <- function(x){
   #   stop( my_msg )
   # }
   
+  # return(x)
   return(TRUE)
 }
 
